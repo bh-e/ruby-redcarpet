@@ -1,0 +1,107 @@
+--- !ruby/object:Gem::Specification 
+name: redcarpet
+version: !ruby/object:Gem::Version 
+  hash: 9
+  prerelease: 
+  segments: 
+  - 2
+  - 1
+  - 1
+  version: 2.1.1
+platform: ruby
+authors: 
+- "Natacha Port\xC3\xA9"
+- "Vicent Mart\xC3\xAD"
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2011-09-14 00:00:00 Z
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: rake-compiler
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id001
+description: A fast, safe and extensible Markdown to (X)HTML parser
+email: vicent@github.com
+executables: 
+- redcarpet
+extensions: 
+- ext/redcarpet/extconf.rb
+extra_rdoc_files: 
+- COPYING
+files: 
+- COPYING
+- README.markdown
+- Rakefile
+- bin/redcarpet
+- ext/redcarpet/autolink.c
+- ext/redcarpet/autolink.h
+- ext/redcarpet/buffer.c
+- ext/redcarpet/buffer.h
+- ext/redcarpet/extconf.rb
+- ext/redcarpet/houdini.h
+- ext/redcarpet/houdini_href_e.c
+- ext/redcarpet/houdini_html_e.c
+- ext/redcarpet/html.c
+- ext/redcarpet/html.h
+- ext/redcarpet/html_blocks.h
+- ext/redcarpet/html_smartypants.c
+- ext/redcarpet/markdown.c
+- ext/redcarpet/markdown.h
+- ext/redcarpet/rc_markdown.c
+- ext/redcarpet/rc_render.c
+- ext/redcarpet/redcarpet.h
+- ext/redcarpet/stack.c
+- ext/redcarpet/stack.h
+- lib/redcarpet.rb
+- lib/redcarpet/compat.rb
+- lib/redcarpet/render_man.rb
+- lib/redcarpet/render_strip.rb
+- redcarpet.gemspec
+- test/redcarpet_test.rb
+homepage: http://github.com/tanoku/redcarpet
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.8.15
+signing_key: 
+specification_version: 3
+summary: Markdown that smells nice
+test_files: 
+- test/redcarpet_test.rb
