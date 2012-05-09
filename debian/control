@@ -1,0 +1,27 @@
+Source: ruby-redcarpet
+Section: ruby
+Priority: optional
+Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Uploaders: Youhei SASAKI <uwabami@gfd-dennou.org>
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 7.0.50~), gem2deb (>= 0.2.13~), rake-compiler
+Standards-Version: 3.9.3
+Vcs-Git: git://git.debian.org/pkg-ruby-extras/ruby-redcarpet.git
+Vcs-Browser: http://git.debian.org/?p=pkg-ruby-extras/ruby-redcarpet.git;a=summary
+Homepage: http://github.com/tanoku/redcarpet
+XS-Ruby-Versions: all
+
+Package: ruby-redcarpet
+Architecture: any
+XB-Ruby-Versions: ${ruby:Versions}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ruby | ruby-interpreter
+Description: Fast, safe and extensible Markdown to (X)HTML parser written in Ruby
+ Redcarpet is Ruby library for Markdown processing that smells like
+ butterflies and popcorn.
+ .
+ Redcarpet used to be a drop-in replacement for Redcloth. This is no
+ longer the case since version 2 -- it now has its own API, but retains
+ the old name. Yes, that does mean that Redcarpet 2 is not
+ backwards-compatible with the 1.X versions.
+
+
