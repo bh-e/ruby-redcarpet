@@ -1,6 +1,5 @@
-ruby-redcarpet (2.1.1-1) UNRELEASED; urgency=low
+ruby-redcarpet (2.1.1-1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)
-  * New upstream release
+  * Initial release (Closes: #672508)
 
  -- Youhei SASAKI <uwabami@gfd-dennou.org>  Thu, 10 May 2012 01:58:32 +0900
