@@ -15,13 +15,8 @@ Package: ruby-redcarpet
 Architecture: any
 XB-Ruby-Versions: ${ruby:Versions}
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby | ruby-interpreter
-Description: Fast, safe and extensible Markdown to (X)HTML parser written in Ruby
- Redcarpet is Ruby library for Markdown processing that smells like
- butterflies and popcorn.
- .
- Redcarpet used to be a drop-in replacement for Redcloth. This is no
- longer the case since version 2 -- it now has its own API, but retains
- the old name. Yes, that does mean that Redcarpet 2 is not
- backwards-compatible with the 1.X versions.
+Description: Fast, safe and extensible Markdown to (X)HTML parser for Ruby
+ Redcarpet is Ruby library for Markdown processing.
+ This is fast, safe and extensible Markdown to (X)HTML parser.
 
 
