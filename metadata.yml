@@ -1,13 +1,13 @@
 --- !ruby/object:Gem::Specification 
 name: redcarpet
 version: !ruby/object:Gem::Version 
-  hash: 9
+  hash: 3
   prerelease: 
   segments: 
   - 2
-  - 1
-  - 1
-  version: 2.1.1
+  - 2
+  - 2
+  version: 2.2.2
 platform: ruby
 authors: 
 - "Natacha Port\xC3\xA9"
@@ -16,10 +16,11 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2011-09-14 00:00:00 Z
+date: 2012-10-19 00:00:00 +02:00
+default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
-  name: rake-compiler
+  name: nokogiri
   prerelease: false
   requirement: &id001 !ruby/object:Gem::Requirement 
     none: false
@@ -32,6 +33,20 @@ dependencies:
         version: "0"
   type: :development
   version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: rake-compiler
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        hash: 3
+        segments: 
+        - 0
+        version: "0"
+  type: :development
+  version_requirements: *id002
 description: A fast, safe and extensible Markdown to (X)HTML parser
 email: vicent@github.com
 executables: 
@@ -42,6 +57,8 @@ extra_rdoc_files:
 - COPYING
 files: 
 - COPYING
+- Gemfile
+- Gemfile.lock
 - README.markdown
 - Rakefile
 - bin/redcarpet
@@ -70,7 +87,8 @@ files:
 - lib/redcarpet/render_strip.rb
 - redcarpet.gemspec
 - test/redcarpet_test.rb
-homepage: http://github.com/tanoku/redcarpet
+has_rdoc: true
+homepage: http://github.com/vmg/redcarpet
 licenses: []
 
 post_install_message: 
@@ -99,7 +117,7 @@ required_rubygems_version: !ruby/object:Gem::Requirement
 requirements: []
 
 rubyforge_project: 
-rubygems_version: 1.8.15
+rubygems_version: 1.6.2
 signing_key: 
 specification_version: 3
 summary: Markdown that smells nice

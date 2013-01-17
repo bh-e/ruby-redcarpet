@@ -1,7 +1,7 @@
 require 'redcarpet.so'
 
 module Redcarpet
-  VERSION = '2.1.1'
+  VERSION = '2.2.2'
 
   class Markdown
     attr_reader :renderer
@@ -77,7 +77,7 @@ class RedcarpetCompat
     :fenced_code => :fenced_code_blocks,
     :filter_html => :filter_html,
     :hard_wrap => :hard_wrap,
-    :lax_htmlblock => :lax_html_blocks,
+    :lax_htmlblock => :lax_spacing,
     :no_image => :no_images,
     :no_intraemphasis => :no_intra_emphasis,
     :no_links => :no_links,

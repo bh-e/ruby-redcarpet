@@ -9,14 +9,14 @@ case since version 2 -- it now has its own API, but retains the old name. Yes,
 that does mean that Redcarpet 2 is not backwards-compatible with the 1.X
 versions.
 
-Redcarpet is powered by the [Sundown](https://www.github.com/tanoku/sundown)
+Redcarpet is powered by the [Sundown](https://www.github.com/vmg/sundown)
 library. You might want to find out more about Sundown to see what makes this
 Ruby library so awesome.
 
 This library is written by people
 -------------------------------------------------------
 
-Redcarpet 2 has been rewritten from scratch by Vicent Martí (@tanoku). Why
+Redcarpet 2 has been rewritten from scratch by Vicent Martí (@vmg). Why
 are you not following me on Twitter?
 
 Redcarpet would not be possible without the Sundown library and its authors
@@ -32,7 +32,7 @@ extensions, but the parser is standalone and requires no installed libraries.
 
 The Redcarpet source (including Sundown as a submodule) is available at GitHub:
 
-    $ git clone git://github.com/tanoku/redcarpet.git
+    $ git clone git://github.com/vmg/redcarpet.git
 
 And it's like *really* simple to use
 ------------------------------------
@@ -78,7 +78,7 @@ settings, and reused between parses.
                     Two `~` characters mark the start of a strikethrough,
                     e.g. `this is ~~good~~ bad`
 
-                :lax_html_blocks - HTML blocks do not require to be surrounded
+                :lax_spacing - HTML blocks do not require to be surrounded
                     by an empty line as in the Markdown standard.
 
                 :space_after_headers - A space is always required between the
@@ -126,32 +126,33 @@ instantiating the renderer:
 
     Render::HTML.new(render_options={})
 
-    Initializes an HTML renderer. The following flags are available:
+Initializes an HTML renderer. The following flags are available:
 
-        :filter_html - do not allow any user-inputted HTML in the output
+    :filter_html - do not allow any user-inputted HTML in the output
 
-        :no_images - do not generate any `<img>` tags
+    :no_images - do not generate any `<img>` tags
 
-        :no_links - do not generate any `<a>` tags
+    :no_links - do not generate any `<a>` tags
 
-        :no_styles - do not generate any `<style>` tags
+    :no_styles - do not generate any `<style>` tags
 
-        :safe_links_only - only generate links for protocols which are considered safe
+    :safe_links_only - only generate links for protocols which are considered safe
 
-        :with_toc_data - add HTML anchors to each header in the output HTML,
-            to allow linking to each section.
+    :with_toc_data - add HTML anchors to each header in the output HTML,
+        to allow linking to each section.
 
-        :hard_wrap - insert HTML `<br>` tags inside on paragraphs where the origin
-            Markdown document had newlines (by default, Markdown ignores these
-            newlines).
+    :hard_wrap - insert HTML `<br>` tags inside on paragraphs where the origin
+        Markdown document had newlines (by default, Markdown ignores these
+        newlines).
 
-        :xhtml - output XHTML-conformant tags. This option is always enabled in the
-            `Render::XHTML` renderer.
+    :xhtml - output XHTML-conformant tags. This option is always enabled in the
+        `Render::XHTML` renderer.
 
+        :link_attributes - hash of extra attributes to add to links
 
-    Example:
+Example:
 
-        rndr = Redcarpet::Render::HTML.new(:no_links => true, :hard_wrap => true)
+    rndr = Redcarpet::Render::HTML.new(:no_links => true, :hard_wrap => true)
 
 
 The `HTML` renderer has an alternate version, `Redcarpet::Render::HTML_TOC`,
@@ -295,7 +296,7 @@ software accordingly, and force your users to install it. That's the
 only way to have reliable and predictable Markdown output on your program.
 
 Still, if major forces (let's say, tornadoes or other natural disasters) force you
-to keep a Markdown-compatibility later, Redcarpet also supports this:
+to keep a Markdown-compatibility layer, Redcarpet also supports this:
 
     require 'redcarpet/compat'
 
@@ -310,6 +311,10 @@ that's a maintance nightmare and won't work.
 
 On a related topic: if your Markdown gem has a `lib/markdown.rb` file that
 monkeypatches the Markdown class, you're a terrible human being. Just saying.
+
+Testing
+-------
+Tests run a lot faster without `bundle exec` :)
 
 Boring legal stuff
 ------------------

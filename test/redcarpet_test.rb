@@ -127,6 +127,12 @@ EOE
     
     assert rd =~ /<br>/
   end
+
+  def test_that_link_attributes_work
+    rndr = Redcarpet::Render::HTML.new(:link_attributes => {:rel => 'blank'})
+    md = Redcarpet::Markdown.new(rndr)
+    assert md.render('This is a [simple](http://test.com) test.').include?('rel="blank"')
+  end
 end
 
 class MarkdownTest < Test::Unit::TestCase
@@ -187,7 +193,7 @@ class MarkdownTest < Test::Unit::TestCase
   end
 
   def test_para_before_block_html_should_not_wrap_in_p_tag
-    markdown = render_with({:lax_html_blocks => true},
+    markdown = render_with({:lax_spacing => true},
       "Things to watch out for\n" +
       "<ul>\n<li>Blah</li>\n</ul>\n")
 
@@ -311,6 +317,15 @@ fenced
     assert render_with({:fenced_code_blocks => true}, text) =~ /<code/
   end
 
+  def test_that_fenced_flag_works_without_space
+    text = "foo\nbar\n```\nsome\ncode\n```\nbaz"
+    out = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :fenced_code_blocks => true, :lax_spacing => true).render(text)
+    assert out.include?("<pre><code>")
+
+    out = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :fenced_code_blocks => true).render(text)
+    assert !out.include?("<pre><code>")
+  end
+
   def test_that_headers_are_linkable
     markdown = @markdown.render('### Hello [GitHub](http://github.com)')
     html_equal "<h3>Hello <a href=\"http://github.com\">GitHub</a></h3>", markdown
@@ -326,6 +341,14 @@ text
   def test_spaced_headers
     rd = render_with({:space_after_headers => true}, "#123 a header yes\n")
     assert rd !~ /<h1>/
+  end
+
+  def test_proper_intra_emphasis
+    md = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :no_intra_emphasis => true)
+    assert render_with({:no_intra_emphasis => true}, "http://en.wikipedia.org/wiki/Dave_Allen_(comedian)") !~ /<em>/
+    assert render_with({:no_intra_emphasis => true}, "this fails: hello_world_") !~ /<em>/
+    assert render_with({:no_intra_emphasis => true}, "this also fails: hello_world_#bye") !~ /<em>/
+    assert render_with({:no_intra_emphasis => true}, "this works: hello_my_world") !~ /<em>/
   end
 end
 

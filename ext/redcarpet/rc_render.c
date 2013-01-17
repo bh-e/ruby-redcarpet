@@ -234,6 +234,27 @@ rndr_doc_footer(struct buf *ob, void *opaque)
 	BLOCK_CALLBACK("doc_footer", 0);
 }
 
+static int
+cb_link_attribute(VALUE key, VALUE val, VALUE payload)
+{
+	struct buf *ob = (struct buf *)payload;
+	key = rb_obj_as_string(key);
+	val = rb_obj_as_string(val);
+	bufprintf(ob, " %s=\"%s\"", StringValueCStr(key), StringValueCStr(val));
+	return 0;
+}
+
+static void
+rndr_link_attributes(struct buf *ob, const struct buf *url, void *opaque)
+{
+	struct redcarpet_renderopt *opt = opaque;
+	struct rb_redcarpet_rndr *rndr;
+
+	Data_Get_Struct(opt->self, struct rb_redcarpet_rndr, rndr);
+	Check_Type(opt->link_attributes, T_HASH);
+	rb_hash_foreach(opt->link_attributes, &cb_link_attribute, (VALUE)ob);
+}
+
 static struct sd_callbacks rb_redcarpet_callbacks = {
 	rndr_blockcode,
 	rndr_blockquote,
@@ -342,12 +363,11 @@ static VALUE rb_redcarpet_html_init(int argc, VALUE *argv, VALUE self)
 {
 	struct rb_redcarpet_rndr *rndr;
 	unsigned int render_flags = 0;
-	VALUE hash;
+	VALUE hash, link_attr = Qnil;
 
 	Data_Get_Struct(self, struct rb_redcarpet_rndr, rndr);
 
-	if (rb_scan_args(argc, argv, "01", &hash) == 1)
-	{
+	if (rb_scan_args(argc, argv, "01", &hash) == 1) {
 		Check_Type(hash, T_HASH);
 
 		/* escape_html */
@@ -382,10 +402,17 @@ static VALUE rb_redcarpet_html_init(int argc, VALUE *argv, VALUE self)
 
 		if (rb_hash_aref(hash, CSTR2SYM("xhtml")) == Qtrue)
 			render_flags |= HTML_USE_XHTML;
+
+		link_attr = rb_hash_aref(hash, CSTR2SYM("link_attributes"));
 	}
 
 	sdhtml_renderer(&rndr->callbacks, (struct html_renderopt *)&rndr->options.html, render_flags);
 	rb_redcarpet__overload(self, rb_cRenderHTML);
+
+	if (!NIL_P(link_attr)) {
+		rndr->options.link_attributes = link_attr;
+		rndr->options.html.link_attributes = &rndr_link_attributes;
+	}
 
 	return Qnil;
 }

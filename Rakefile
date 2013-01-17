@@ -3,7 +3,7 @@ require 'rake/clean'
 require 'rake/extensiontask'
 require 'digest/md5'
 
-task :default => :test
+task :default => [:test]
 
 # ==========================================================
 # Ruby Extension
@@ -110,7 +110,7 @@ task :update_gem do
 end
 
 desc 'Gather required Sundown sources into extension directory'
-task :gather => 'sundown/src/markdown.h' do |t|
+task :gather => 'sundown:checkout' do |t|
   files =
     FileList[
       'sundown/src/{markdown,buffer,stack,autolink,html_blocks}.h',
@@ -123,8 +123,9 @@ task :gather => 'sundown/src/markdown.h' do |t|
     :verbose => true
 end
 
-file 'sundown/src/markdown.h' do |t|
-  abort "The Sundown submodule is required."
+task 'sundown:checkout' do |t|
+  unless File.exists?('sundown/src/markdown.h')
+    sh 'git submodule init'
+    sh 'git submodule update'
+  end
 end
-
-
