@@ -1,16 +1,18 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name = 'redcarpet'
-  s.version = '2.1.1'
+  s.version = '2.2.2'
   s.summary = "Markdown that smells nice"
   s.description = 'A fast, safe and extensible Markdown to (X)HTML parser'
-  s.date = '2011-09-14'
+  s.date = '2012-10-19'
   s.email = 'vicent@github.com'
-  s.homepage = 'http://github.com/tanoku/redcarpet'
+  s.homepage = 'http://github.com/vmg/redcarpet'
   s.authors = ["Natacha Porté", "Vicent Martí"]
   # = MANIFEST =
   s.files = %w[
     COPYING
+    Gemfile
+    Gemfile.lock
     README.markdown
     Rakefile
     bin/redcarpet
@@ -47,5 +49,6 @@ Gem::Specification.new do |s|
   s.extensions = ["ext/redcarpet/extconf.rb"]
   s.executables = ["redcarpet"]
   s.require_paths = ["lib"]
+  s.add_development_dependency "nokogiri"
   s.add_development_dependency "rake-compiler"
 end
