@@ -1,3 +1,19 @@
+ruby-redcarpet (2.3.0-1) unstable; urgency=low
+
+  [ Youhei SASAKI ]
+  * Team upload.
+  * Imported Upstream version 2.3.0
+  * Add patch: Remove RubyGems Depends in tests/test_helper.rb
+  * Update Test: import upstream Rakefile into debian/ruby-tests.rake
+  * Update copyright
+  * Bump Standard Version: 3.9.4
+
+  [ Cédric Boutillier ]
+  * debian/control: remove obsolete DM-Upload-Allowed flag
+  * use canonical URI in Vcs-* fields
+
+ -- Youhei SASAKI <uwabami@gfd-dennou.org>  Sun, 02 Jun 2013 02:23:19 +0900
+
 ruby-redcarpet (2.2.2-1) experimental; urgency=low
 
   * Imported Upstream version 2.2.2
