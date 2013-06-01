@@ -56,9 +56,11 @@ enum mkd_extensions {
 	MKDEXT_FENCED_CODE = (1 << 2),
 	MKDEXT_AUTOLINK = (1 << 3),
 	MKDEXT_STRIKETHROUGH = (1 << 4),
+	MKDEXT_UNDERLINE = (1 << 5),
 	MKDEXT_SPACE_HEADERS = (1 << 6),
 	MKDEXT_SUPERSCRIPT = (1 << 7),
 	MKDEXT_LAX_SPACING = (1 << 8),
+	MKDEXT_DISABLE_INDENTED_CODE = (1 << 9),
 };
 
 /* sd_callbacks - functions for rendering parsed data */
@@ -82,6 +84,7 @@ struct sd_callbacks {
 	int (*codespan)(struct buf *ob, const struct buf *text, void *opaque);
 	int (*double_emphasis)(struct buf *ob, const struct buf *text, void *opaque);
 	int (*emphasis)(struct buf *ob, const struct buf *text, void *opaque);
+	int (*underline)(struct buf *ob, const struct buf *text, void *opaque);
 	int (*image)(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt, void *opaque);
 	int (*linebreak)(struct buf *ob, void *opaque);
 	int (*link)(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *content, void *opaque);

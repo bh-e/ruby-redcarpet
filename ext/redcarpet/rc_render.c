@@ -41,9 +41,9 @@ VALUE rb_cRenderHTML_TOC;
 VALUE rb_mSmartyPants;
 
 #ifdef HAVE_RUBY_ENCODING_H
-#define buf2str(t) ((t) ? redcarpet_str_new((t)->data, (t)->size, opt->active_enc) : Qnil)
+#define buf2str(t) ((t) ? redcarpet_str_new((const char*)(t)->data, (t)->size, opt->active_enc) : Qnil)
 #else
-#define buf2str(t) ((t) ? redcarpet_str_new((t)->data, (t)->size, NULL) : Qnil)
+#define buf2str(t) ((t) ? redcarpet_str_new((const char*)(t)->data, (t)->size, NULL) : Qnil)
 #endif
 
 static void
@@ -166,6 +166,12 @@ rndr_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 }
 
 static int
+rndr_underline(struct buf *ob, const struct buf *text, void *opaque)
+{
+	SPAN_CALLBACK("underline", 1, buf2str(text));
+}
+
+static int
 rndr_image(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt, void *opaque)
 {
 	SPAN_CALLBACK("image", 3, buf2str(link), buf2str(title), buf2str(alt));
@@ -272,6 +278,7 @@ static struct sd_callbacks rb_redcarpet_callbacks = {
 	rndr_codespan,
 	rndr_double_emphasis,
 	rndr_emphasis,
+	rndr_underline,
 	rndr_image,
 	rndr_linebreak,
 	rndr_link,
@@ -304,6 +311,7 @@ static const char *rb_redcarpet_method_names[] = {
 	"codespan",
 	"double_emphasis",
 	"emphasis",
+	"underline",
 	"image",
 	"linebreak",
 	"link",
@@ -321,11 +329,17 @@ static const char *rb_redcarpet_method_names[] = {
 
 static const size_t rb_redcarpet_method_count = sizeof(rb_redcarpet_method_names)/sizeof(char *);
 
+static void rb_redcarpet_rbase_mark(struct rb_redcarpet_rndr *rndr)
+{
+	if (rndr->options.link_attributes)
+		rb_gc_mark(rndr->options.link_attributes);
+}
+
 static VALUE rb_redcarpet_rbase_alloc(VALUE klass)
 {
 	struct rb_redcarpet_rndr *rndr = ALLOC(struct rb_redcarpet_rndr);
 	memset(rndr, 0x0, sizeof(struct rb_redcarpet_rndr));
-	return Data_Wrap_Struct(klass, NULL, NULL, rndr);
+	return Data_Wrap_Struct(klass, rb_redcarpet_rbase_mark, NULL, rndr);
 }
 
 static void rb_redcarpet__overload(VALUE self, VALUE base_class)
@@ -386,6 +400,10 @@ static VALUE rb_redcarpet_html_init(int argc, VALUE *argv, VALUE self)
 		if (rb_hash_aref(hash, CSTR2SYM("no_links")) == Qtrue)
 			render_flags |= HTML_SKIP_LINKS;
 
+		/* prettify */
+		if (rb_hash_aref(hash, CSTR2SYM("prettify")) == Qtrue)
+			render_flags |= HTML_PRETTIFY;
+
 		/* filter_style */
 		if (rb_hash_aref(hash, CSTR2SYM("no_styles")) == Qtrue)
 			render_flags |= HTML_SKIP_STYLE;
@@ -437,8 +455,8 @@ static VALUE rb_redcarpet_smartypants_render(VALUE self, VALUE text)
 
 	output_buf = bufnew(128);
 
-	sdhtml_smartypants(output_buf, RSTRING_PTR(text), RSTRING_LEN(text));
-	result = redcarpet_str_new(output_buf->data, output_buf->size, rb_enc_get(text));
+	sdhtml_smartypants(output_buf, (const uint8_t*)RSTRING_PTR(text), RSTRING_LEN(text));
+	result = redcarpet_str_new((const char*)output_buf->data, output_buf->size, rb_enc_get(text));
 
 	bufrelease(output_buf);
 	return result;

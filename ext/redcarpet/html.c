@@ -118,11 +118,18 @@ rndr_autolink(struct buf *ob, const struct buf *link, enum mkd_autolink type, vo
 static void
 rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, void *opaque)
 {
+	struct html_renderopt *options = opaque;
+
 	if (ob->size) bufputc(ob, '\n');
 
 	if (lang && lang->size) {
 		size_t i, cls;
-		BUFPUTSL(ob, "<pre><code class=\"");
+		if (options->flags & HTML_PRETTIFY) {
+			BUFPUTSL(ob, "<pre><code class=\"prettyprint");
+			cls++;
+		} else {
+			BUFPUTSL(ob, "<pre><code class=\"");
+		}
 
 		for (i = 0, cls = 0; i < lang->size; ++i, ++cls) {
 			while (i < lang->size && isspace(lang->data[i]))
@@ -142,8 +149,11 @@ rndr_blockcode(struct buf *ob, const struct buf *text, const struct buf *lang, v
 		}
 
 		BUFPUTSL(ob, "\">");
-	} else
+	} else if (options->flags & HTML_PRETTIFY) {
+		BUFPUTSL(ob, "<pre><code class=\"prettyprint\">");
+	} else {
 		BUFPUTSL(ob, "<pre><code>");
+	}
 
 	if (text)
 		escape_html(ob, text->data, text->size);
@@ -163,7 +173,11 @@ rndr_blockquote(struct buf *ob, const struct buf *text, void *opaque)
 static int
 rndr_codespan(struct buf *ob, const struct buf *text, void *opaque)
 {
-	BUFPUTSL(ob, "<code>");
+	struct html_renderopt *options = opaque;
+	if (options->flags & HTML_PRETTIFY)
+		BUFPUTSL(ob, "<code class=\"prettyprint\">");
+	else
+		BUFPUTSL(ob, "<code>");
 	if (text) escape_html(ob, text->data, text->size);
 	BUFPUTSL(ob, "</code>");
 	return 1;
@@ -201,6 +215,19 @@ rndr_emphasis(struct buf *ob, const struct buf *text, void *opaque)
 	BUFPUTSL(ob, "<em>");
 	if (text) bufput(ob, text->data, text->size);
 	BUFPUTSL(ob, "</em>");
+	return 1;
+}
+
+static int
+rndr_underline(struct buf *ob, const struct buf *text, void *opaque)
+{
+	if (!text || !text->size)
+		return 0;
+
+	BUFPUTSL(ob, "<u>");
+	bufput(ob, text->data, text->size);
+	BUFPUTSL(ob, "</u>");
+
 	return 1;
 }
 
@@ -559,6 +586,7 @@ sdhtml_toc_renderer(struct sd_callbacks *callbacks, struct html_renderopt *optio
 		rndr_codespan,
 		rndr_double_emphasis,
 		rndr_emphasis,
+		rndr_underline,
 		NULL,
 		NULL,
 		toc_link,
@@ -600,6 +628,7 @@ sdhtml_renderer(struct sd_callbacks *callbacks, struct html_renderopt *options, 
 		rndr_codespan,
 		rndr_double_emphasis,
 		rndr_emphasis,
+		rndr_underline,
 		rndr_image,
 		rndr_linebreak,
 		rndr_link,
