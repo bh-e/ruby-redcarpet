@@ -3,7 +3,10 @@ Section: ruby
 Priority: optional
 Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
 Uploaders: Youhei SASAKI <uwabami@gfd-dennou.org>, Taku YASUI <tach@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), gem2deb (>= 0.3.0~), rake-compiler, ruby-nokogiri
+Build-Depends: debhelper (>= 7.0.50~), gem2deb (>= 0.3.0~), rake,
+ rake-compiler, 
+ ruby-nokogiri, 
+ ruby-test-unit
 Standards-Version: 3.9.3
 Vcs-Git: git://anonscm.debian.org/pkg-ruby-extras/ruby-redcarpet.git
 Vcs-Browser: http://anonscm.debian.org/gitweb?p=pkg-ruby-extras/ruby-redcarpet.git;a=summary
