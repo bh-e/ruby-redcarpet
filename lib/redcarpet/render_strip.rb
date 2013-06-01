@@ -8,13 +8,13 @@ module Redcarpet
       [
         # block-level calls
         :block_code, :block_quote,
-        :block_html, :header, :list,
-        :list_item, :paragraph,
+        :block_html, :list, :list_item,
 
         # span-level calls
         :autolink, :codespan, :double_emphasis,
-        :emphasis, :raw_html, :triple_emphasis,
-        :strikethrough, :superscript,
+        :emphasis, :underline, :raw_html,
+        :triple_emphasis, :strikethrough,
+        :superscript,
 
         # low level rendering
         :entity, :normal_text
@@ -27,6 +27,14 @@ module Redcarpet
       # Other methods where the text content is in another argument
       def link(link, title, content)
         content
+      end
+
+      def paragraph(text)
+        text + "\n"
+      end
+
+      def header(text, header_level)
+        text + "\n"
       end
     end
   end

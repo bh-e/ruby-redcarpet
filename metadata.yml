@@ -1,64 +1,108 @@
---- !ruby/object:Gem::Specification 
+--- !ruby/object:Gem::Specification
 name: redcarpet
-version: !ruby/object:Gem::Version 
-  hash: 3
+version: !ruby/object:Gem::Version
+  version: 2.3.0
   prerelease: 
-  segments: 
-  - 2
-  - 2
-  - 2
-  version: 2.2.2
 platform: ruby
-authors: 
-- "Natacha Port\xC3\xA9"
-- "Vicent Mart\xC3\xAD"
+authors:
+- Natacha Porté
+- Vicent Martí
 autorequire: 
 bindir: bin
 cert_chain: []
-
-date: 2012-10-19 00:00:00 +02:00
-default_executable: 
-dependencies: 
-- !ruby/object:Gem::Dependency 
+date: 2013-05-22 00:00:00.000000000 Z
+dependencies:
+- !ruby/object:Gem::Dependency
   name: nokogiri
-  prerelease: false
-  requirement: &id001 !ruby/object:Gem::Requirement 
+  requirement: !ruby/object:Gem::Requirement
     none: false
-    requirements: 
-    - - ">="
-      - !ruby/object:Gem::Version 
-        hash: 3
-        segments: 
-        - 0
-        version: "0"
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
   type: :development
-  version_requirements: *id001
-- !ruby/object:Gem::Dependency 
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
   name: rake-compiler
-  prerelease: false
-  requirement: &id002 !ruby/object:Gem::Requirement 
+  requirement: !ruby/object:Gem::Requirement
     none: false
-    requirements: 
-    - - ">="
-      - !ruby/object:Gem::Version 
-        hash: 3
-        segments: 
-        - 0
-        version: "0"
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
   type: :development
-  version_requirements: *id002
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: test-unit
+  requirement: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: bluecloth
+  requirement: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: kramdown
+  requirement: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    none: false
+    requirements:
+    - - ! '>='
+      - !ruby/object:Gem::Version
+        version: '0'
 description: A fast, safe and extensible Markdown to (X)HTML parser
 email: vicent@github.com
-executables: 
+executables:
 - redcarpet
-extensions: 
+extensions:
 - ext/redcarpet/extconf.rb
-extra_rdoc_files: 
+extra_rdoc_files:
 - COPYING
-files: 
+files:
 - COPYING
 - Gemfile
-- Gemfile.lock
 - README.markdown
 - Rakefile
 - bin/redcarpet
@@ -86,40 +130,46 @@ files:
 - lib/redcarpet/render_man.rb
 - lib/redcarpet/render_strip.rb
 - redcarpet.gemspec
-- test/redcarpet_test.rb
-has_rdoc: true
+- test/test_helper.rb
+- test/custom_render_test.rb
+- test/html_render_test.rb
+- test/markdown_test.rb
+- test/pathological_inputs_test.rb
+- test/redcarpet_compat_test.rb
+- test/smarty_html_test.rb
+- test/smarty_pants_test.rb
+- test/stripdown_render_test.rb
 homepage: http://github.com/vmg/redcarpet
 licenses: []
-
 post_install_message: 
 rdoc_options: []
-
-require_paths: 
+require_paths:
 - lib
-required_ruby_version: !ruby/object:Gem::Requirement 
+required_ruby_version: !ruby/object:Gem::Requirement
   none: false
-  requirements: 
-  - - ">="
-    - !ruby/object:Gem::Version 
-      hash: 3
-      segments: 
-      - 0
-      version: "0"
-required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements:
+  - - ! '>='
+    - !ruby/object:Gem::Version
+      version: '0'
+required_rubygems_version: !ruby/object:Gem::Requirement
   none: false
-  requirements: 
-  - - ">="
-    - !ruby/object:Gem::Version 
-      hash: 3
-      segments: 
-      - 0
-      version: "0"
+  requirements:
+  - - ! '>='
+    - !ruby/object:Gem::Version
+      version: '0'
 requirements: []
-
 rubyforge_project: 
-rubygems_version: 1.6.2
+rubygems_version: 1.8.23
 signing_key: 
 specification_version: 3
 summary: Markdown that smells nice
-test_files: 
-- test/redcarpet_test.rb
+test_files:
+- test/test_helper.rb
+- test/custom_render_test.rb
+- test/html_render_test.rb
+- test/markdown_test.rb
+- test/pathological_inputs_test.rb
+- test/redcarpet_compat_test.rb
+- test/smarty_html_test.rb
+- test/smarty_pants_test.rb
+- test/stripdown_render_test.rb
