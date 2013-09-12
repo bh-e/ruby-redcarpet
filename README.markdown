@@ -11,7 +11,7 @@ case since version 2 -- it now has its own API, but retains the old name. Yes,
 that does mean that Redcarpet 2 is not backwards-compatible with the 1.X
 versions.
 
-Redcarpet is powered by the [Sundown](https://www.github.com/vmg/sundown)
+Redcarpet is based on the [Sundown](https://www.github.com/vmg/sundown)
 library. You might want to find out more about Sundown to see what makes this
 Ruby library so awesome.
 
@@ -29,10 +29,11 @@ You can totally install it as a Gem
 
 Redcarpet is readily available as a Ruby gem. It will build some native
 extensions, but the parser is standalone and requires no installed libraries.
+Redcarpet requires at least Ruby 1.9.2 on your system.
 
     $ [sudo] gem install redcarpet
 
-The Redcarpet source (including Sundown as a submodule) is available at GitHub:
+The Redcarpet source is available at GitHub:
 
     $ git clone git://github.com/vmg/redcarpet.git
 
@@ -63,12 +64,12 @@ parser will identify. The following extensions are accepted:
 * `:no_intra_emphasis`: do not parse emphasis inside of words.
 Strings such as `foo_bar_baz` will not generate `<em>` tags.
 
-* `:tables`: parse tables, PHP-Markdown style
+* `:tables`: parse tables, PHP-Markdown style.
 
 * `:fenced_code_blocks`: parse fenced code blocks, PHP-Markdown
 style. Blocks delimited with 3 or more `~` or backtickswill be considered
 as code, without the need to be indented. An optional language name may
-be added at the end of the opening fence for the code block
+be added at the end of the opening fence for the code block.
 
 * `:autolink`: parse links even when they are not enclosed in `<>`
 characters. Autolinks for the http, https and ftp protocols will be
@@ -83,9 +84,9 @@ with `fenced_code_blocks: true`.
 
 * `:strikethrough`: parse strikethrough, PHP-Markdown style
 Two `~` characters mark the start of a strikethrough,
-e.g. `this is ~~good~~ bad`
+e.g. `this is ~~good~~ bad`.
 
-* `:lax_spacing` - HTML blocks do not require to be surrounded by an
+* `:lax_spacing`: HTML blocks do not require to be surrounded by an
 empty line as in the Markdown standard.
 
 * `:space_after_headers`: A space is always required between the hash
@@ -96,6 +97,9 @@ would not be a valid header.
 
 * `:underline`: parse underscored emphasis as underlines.
 `This is _underlined_ but this is still *italic*`.
+
+* `:highlight`: parse highlights.
+`This is ==highlighted==`. It looks like this: `<mark>highlighted</mark>`
 
 Example:
 
@@ -124,25 +128,25 @@ performance — several degrees of magnitude faster than other Ruby Markdown
 solutions.
 
 All the rendering flags that previously applied only to HTML output have
-now been moved to the `Render::HTML` class, and may be enabled when
+now been moved to the `Redcarpet::Render::HTML` class, and may be enabled when
 instantiating the renderer:
 
 ~~~~~ ruby
-Render::HTML.new(render_options = {})
+Redcarpet::Render::HTML.new(render_options = {})
 ~~~~~
 
 Initializes an HTML renderer. The following flags are available:
 
-* `:filter_html`: do not allow any user-inputted HTML in the output
+* `:filter_html`: do not allow any user-inputted HTML in the output.
 
-* `:no_images`: do not generate any `<img>` tags
+* `:no_images`: do not generate any `<img>` tags.
 
-* `:no_links`: do not generate any `<a>` tags
+* `:no_links`: do not generate any `<a>` tags.
 
-* `:no_styles`: do not generate any `<style>` tags
+* `:no_styles`: do not generate any `<style>` tags.
 
 * `:safe_links_only`: only generate links for protocols which are considered
-safe
+safe.
 
 * `:with_toc_data`: add HTML anchors to each header in the output HTML,
 to allow linking to each section.
@@ -153,9 +157,9 @@ Markdown document had newlines (by default, Markdown ignores these newlines).
 * `:xhtml`: output XHTML-conformant tags. This option is always enabled in the
 `Render::XHTML` renderer.
 
-* `:prettify`: add prettyprint classes to `<code>` tags for google-code-prettify
+* `:prettify`: add prettyprint classes to `<code>` tags for google-code-prettify.
 
-* `:link_attributes`: hash of extra attributes to add to links
+* `:link_attributes`: hash of extra attributes to add to links.
 
 Example:
 
@@ -190,18 +194,19 @@ end
 markdown = Redcarpet::Markdown.new(HTMLwithPygments, :fenced_code_blocks => true)
 ~~~~~
 
-But new renderers can also be created from scratch (see `lib/render_man.rb` for
+But new renderers can also be created from scratch (see `lib/redcarpet/render_man.rb` for
 an example implementation of a Manpage renderer)
 
 ~~~~~~ ruby
 class ManPage < Redcarpet::Render::Base
-    # you get the drill -- keep going from here
+  # you get the drill -- keep going from here
 end
 ~~~~~
 
 The following instance methods may be implemented by the renderer:
 
 ### Block-level calls
+
 If the return value of the method is `nil`, the block will be skipped.
 If the method for a document element is not implemented, the block will
 be skipped.
@@ -246,6 +251,7 @@ be copied verbatim:
 * strikethrough(text)
 * superscript(text)
 * underline(text)
+* highlight(text)
 
 ### Low level rendering
 
@@ -288,7 +294,7 @@ The SmartyPants parser can be found in `Redcarpet::Render::SmartyPants`. It has
 been implemented as a module, so it can be used standalone or as a mixin.
 
 When mixed with a Renderer class, it will override the `postprocess` method
-to perform SmartyPants replacements once the rendering is complete
+to perform SmartyPants replacements once the rendering is complete.
 
 ~~~~ ruby
 # Mixin
