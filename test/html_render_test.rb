@@ -89,4 +89,51 @@ EOE
     rd = render_with(@rndr[:escape_html], %([This'link"is](http://example.net/)))
     assert_equal "<p><a href=\"http://example.net/\">This&#39;link&quot;is</a></p>\n", rd
   end
+
+  def test_that_code_emphasis_work
+    markdown = <<-MD
+This should be **`a bold codespan`**
+However, this should be *`an emphasised codespan`*
+
+* **`ABC`** or **`DEF`**
+* Foo bar
+MD
+
+    html = <<HTML
+<p>This should be <strong><code>a bold codespan</code></strong>
+However, this should be <em><code>an emphasised codespan</code></em></p>
+
+<ul>
+<li><strong><code>ABC</code></strong> or <strong><code>DEF</code></strong></li>
+<li>Foo bar</li>
+</ul>
+HTML
+
+    output = render_with(Redcarpet::Render::HTML.new, markdown)
+    assert_equal html, output
+  end
+
+  def test_that_parenthesis_are_handled_into_links
+    markdown = "Hey have a look at the [bash man page](man:bash(1))!"
+    html = "<p>Hey have a look at the <a href=\"man:bash(1)\">bash man page</a>!</p>\n"
+    output = render_with(Redcarpet::Render::HTML.new, markdown)
+
+    assert_equal html, output
+  end
+
+  def test_autolinking_works_as_expected
+    markdown = "Example of uri ftp://user:pass@example.com/. Email foo@bar.com and link http://bar.com"
+    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true)
+    output = renderer.render(markdown)
+
+    assert output.include? '<a href="ftp://user:pass@example.com/">ftp://user:pass@example.com/</a>'
+    assert output.include? 'mailto:foo@bar.com'
+    assert output.include? '<a href="http://bar.com">'
+  end
+
+  def test_that_comments_arent_escaped
+    input = "<!-- This is a nice comment! -->"
+    output = render_with(@rndr[:escape_html], input)
+    assert output.include? input
+  end
 end

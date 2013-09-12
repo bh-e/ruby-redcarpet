@@ -1,13 +1,14 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name = 'redcarpet'
-  s.version = '2.3.0'
+  s.version = '3.0.0'
   s.summary = "Markdown that smells nice"
   s.description = 'A fast, safe and extensible Markdown to (X)HTML parser'
-  s.date = '2013-05-22'
+  s.date = '2013-07-09'
   s.email = 'vicent@github.com'
   s.homepage = 'http://github.com/vmg/redcarpet'
   s.authors = ["Natacha Porté", "Vicent Martí"]
+  s.license = 'MIT'
   # = MANIFEST =
   s.files = %w[
     COPYING
@@ -39,7 +40,6 @@ Gem::Specification.new do |s|
     lib/redcarpet/render_man.rb
     lib/redcarpet/render_strip.rb
     redcarpet.gemspec
-    sundown
     test/test_helper.rb
     test/custom_render_test.rb
     test/html_render_test.rb
@@ -57,9 +57,9 @@ Gem::Specification.new do |s|
   s.executables = ["redcarpet"]
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "nokogiri"
-  s.add_development_dependency "rake-compiler"
-  s.add_development_dependency "test-unit"
-  s.add_development_dependency "bluecloth"
-  s.add_development_dependency "kramdown"
+  s.add_development_dependency "nokogiri", "~> 1.6.0"
+  s.add_development_dependency "rake-compiler", "~> 0.8.3"
+  s.add_development_dependency "test-unit", "~> 2.5.4"
+  s.add_development_dependency "bluecloth", "~> 2.2.0"
+  s.add_development_dependency "kramdown", "~> 1.0.2"
 end
