@@ -1,14 +1,15 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name = 'redcarpet'
-  s.version = '3.0.0'
+  s.version = '3.1.1'
   s.summary = "Markdown that smells nice"
   s.description = 'A fast, safe and extensible Markdown to (X)HTML parser'
-  s.date = '2013-07-09'
+  s.date = '2014-02-17'
   s.email = 'vicent@github.com'
   s.homepage = 'http://github.com/vmg/redcarpet'
   s.authors = ["Natacha Porté", "Vicent Martí"]
   s.license = 'MIT'
+  s.required_ruby_version = '>= 1.9.2'
   # = MANIFEST =
   s.files = %w[
     COPYING
@@ -43,6 +44,7 @@ Gem::Specification.new do |s|
     test/test_helper.rb
     test/custom_render_test.rb
     test/html_render_test.rb
+    test/html_toc_render_test.rb
     test/markdown_test.rb
     test/pathological_inputs_test.rb
     test/redcarpet_compat_test.rb
@@ -60,6 +62,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency "nokogiri", "~> 1.6.0"
   s.add_development_dependency "rake-compiler", "~> 0.8.3"
   s.add_development_dependency "test-unit", "~> 2.5.4"
-  s.add_development_dependency "bluecloth", "~> 2.2.0"
-  s.add_development_dependency "kramdown", "~> 1.0.2"
 end
