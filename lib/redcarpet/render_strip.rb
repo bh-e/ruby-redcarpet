@@ -1,4 +1,3 @@
-
 module Redcarpet
   module Render
     # Markdown-stripping renderer. Turns Markdown into plaintext
@@ -15,6 +14,9 @@ module Redcarpet
         :emphasis, :underline, :raw_html,
         :triple_emphasis, :strikethrough,
         :superscript,
+
+        # footnotes
+        :footnotes, :footnote_def, :footnote_ref,
 
         # low level rendering
         :entity, :normal_text
@@ -33,7 +35,7 @@ module Redcarpet
         text + "\n"
       end
 
-      def header(text, header_level)
+      def header(text, header_level, anchor)
         text + "\n"
       end
     end

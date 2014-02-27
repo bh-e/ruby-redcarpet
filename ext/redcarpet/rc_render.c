@@ -61,9 +61,9 @@ rndr_raw_block(struct buf *ob, const struct buf *text, void *opaque)
 }
 
 static void
-rndr_header(struct buf *ob, const struct buf *text, int level, void *opaque)
+rndr_header(struct buf *ob, const struct buf *text, int level, char *anchor, void *opaque)
 {
-	BLOCK_CALLBACK("header", 2, buf2str(text), INT2FIX(level));
+	BLOCK_CALLBACK("header", 3, buf2str(text), INT2FIX(level), rb_str_new2(anchor));
 }
 
 static void
@@ -130,7 +130,17 @@ rndr_tablecell(struct buf *ob, const struct buf *text, int align, void *opaque)
 	BLOCK_CALLBACK("table_cell", 2, buf2str(text), rb_align);
 }
 
+static void
+rndr_footnotes(struct buf *ob, const struct buf *text, void *opaque)
+{
+	BLOCK_CALLBACK("footnotes", 1, buf2str(text));
+}
 
+static void
+rndr_footnote_def(struct buf *ob, const struct buf *text, unsigned int num, void *opaque)
+{
+	BLOCK_CALLBACK("footnote_def", 2, buf2str(text), INT2FIX(num));
+}
 
 
 /***
@@ -174,6 +184,12 @@ rndr_highlight(struct buf *ob, const struct buf *text, void *opaque)
 }
 
 static int
+rndr_quote(struct buf *ob, const struct buf *text, void *opaque)
+{
+	SPAN_CALLBACK("quote", 1, buf2str(text));
+}
+
+static int
 rndr_image(struct buf *ob, const struct buf *link, const struct buf *title, const struct buf *alt, void *opaque)
 {
 	SPAN_CALLBACK("image", 3, buf2str(link), buf2str(title), buf2str(alt));
@@ -213,6 +229,12 @@ static int
 rndr_superscript(struct buf *ob, const struct buf *text, void *opaque)
 {
 	SPAN_CALLBACK("superscript", 1, buf2str(text));
+}
+
+static int
+rndr_footnote_ref(struct buf *ob, unsigned int num, void *opaque)
+{
+	SPAN_CALLBACK("footnote_ref", 1, INT2FIX(num));
 }
 
 /**
@@ -275,6 +297,8 @@ static struct sd_callbacks rb_redcarpet_callbacks = {
 	rndr_table,
 	rndr_tablerow,
 	rndr_tablecell,
+	rndr_footnotes,
+	rndr_footnote_def,
 
 	rndr_autolink,
 	rndr_codespan,
@@ -282,6 +306,7 @@ static struct sd_callbacks rb_redcarpet_callbacks = {
 	rndr_emphasis,
 	rndr_underline,
 	rndr_highlight,
+	rndr_quote,
 	rndr_image,
 	rndr_linebreak,
 	rndr_link,
@@ -289,6 +314,7 @@ static struct sd_callbacks rb_redcarpet_callbacks = {
 	rndr_triple_emphasis,
 	rndr_strikethrough,
 	rndr_superscript,
+	rndr_footnote_ref,
 
 	rndr_entity,
 	rndr_normal_text,
@@ -309,6 +335,8 @@ static const char *rb_redcarpet_method_names[] = {
 	"table",
 	"table_row",
 	"table_cell",
+	"footnotes",
+	"footnote_def",
 
 	"autolink",
 	"codespan",
@@ -316,6 +344,7 @@ static const char *rb_redcarpet_method_names[] = {
 	"emphasis",
 	"underline",
 	"highlight",
+	"quote",
 	"image",
 	"linebreak",
 	"link",
@@ -323,6 +352,7 @@ static const char *rb_redcarpet_method_names[] = {
 	"triple_emphasis",
 	"strikethrough",
 	"superscript",
+	"footnote_ref",
 
 	"entity",
 	"normal_text",
@@ -439,12 +469,26 @@ static VALUE rb_redcarpet_html_init(int argc, VALUE *argv, VALUE self)
 	return Qnil;
 }
 
-static VALUE rb_redcarpet_htmltoc_init(VALUE self)
+static VALUE rb_redcarpet_htmltoc_init(int argc, VALUE *argv, VALUE self)
 {
 	struct rb_redcarpet_rndr *rndr;
+	int nesting_level = 6;
+	VALUE hash, key = Qnil;
+
 	Data_Get_Struct(self, struct rb_redcarpet_rndr, rndr);
 
-	sdhtml_toc_renderer(&rndr->callbacks, (struct html_renderopt *)&rndr->options.html);
+	if (rb_scan_args(argc, argv, "01", &hash) == 1) {
+		Check_Type(hash, T_HASH);
+
+		key = CSTR2SYM("nesting_level");
+
+		if (RTEST(rb_hash_aref(hash, key))) {
+			Check_Type(rb_hash_aref(hash, key), T_FIXNUM);
+			nesting_level = NUM2INT(rb_hash_aref(hash, key));
+		}
+	}
+
+	sdhtml_toc_renderer(&rndr->callbacks, (struct html_renderopt *)&rndr->options.html, nesting_level);
 	rb_redcarpet__overload(self, rb_cRenderHTML_TOC);
 
 	return Qnil;
@@ -478,7 +522,7 @@ void Init_redcarpet_rndr()
 	rb_define_method(rb_cRenderHTML, "initialize", rb_redcarpet_html_init, -1);
 
 	rb_cRenderHTML_TOC = rb_define_class_under(rb_mRender, "HTML_TOC", rb_cRenderBase);
-	rb_define_method(rb_cRenderHTML_TOC, "initialize", rb_redcarpet_htmltoc_init, 0);
+	rb_define_method(rb_cRenderHTML_TOC, "initialize", rb_redcarpet_htmltoc_init, -1);
 
 	rb_mSmartyPants = rb_define_module_under(rb_mRender, "SmartyPants");
 	rb_define_method(rb_mSmartyPants, "postprocess", rb_redcarpet_smartypants_render, 1);
