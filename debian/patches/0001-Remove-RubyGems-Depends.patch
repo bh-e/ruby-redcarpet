@@ -4,7 +4,7 @@ Subject: Remove RubyGems Depends
 
 Signed-off-by: Youhei SASAKI <uwabami@gfd-dennou.org>
 ---
- test/test_helper.rb |    2 --
+ test/test_helper.rb | 2 --
  1 file changed, 2 deletions(-)
 
 diff --git a/test/test_helper.rb b/test/test_helper.rb
