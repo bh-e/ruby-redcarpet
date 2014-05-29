@@ -31,11 +31,16 @@ module Redcarpet
         content
       end
 
+      def image(link, title, content)
+        content &&= content + " "
+        "#{content}#{link}"
+      end
+
       def paragraph(text)
         text + "\n"
       end
 
-      def header(text, header_level, anchor)
+      def header(text, header_level)
         text + "\n"
       end
     end
