@@ -1,3 +1,9 @@
+ruby-redcarpet (3.1.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.1.2
+
+ -- Youhei SASAKI <uwabami@gfd-dennou.org>  Fri, 30 May 2014 00:52:17 +0900
+
 ruby-redcarpet (3.1.1-2) unstable; urgency=low
 
   * Team upload.
