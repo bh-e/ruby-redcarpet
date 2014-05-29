@@ -265,7 +265,7 @@ rndr_linebreak(struct buf *ob, void *opaque)
 	return 1;
 }
 
-char *header_anchor(const struct buf *text)
+char *header_anchor(struct buf *text)
 {
 	VALUE str = rb_str_new2(bufcstr(text));
 	VALUE space_regex = rb_reg_new(" +", 2 /* length */, 0);
@@ -279,7 +279,7 @@ char *header_anchor(const struct buf *text)
 }
 
 static void
-rndr_header(struct buf *ob, const struct buf *text, int level, char *anchor, void *opaque)
+rndr_header(struct buf *ob, const struct buf *text, int level, void *opaque)
 {
 	struct html_renderopt *options = opaque;
 
@@ -287,7 +287,7 @@ rndr_header(struct buf *ob, const struct buf *text, int level, char *anchor, voi
 		bufputc(ob, '\n');
 
 	if ((options->flags & HTML_TOC) && (level <= options->toc_data.nesting_level))
-		bufprintf(ob, "<h%d id=\"%s\">", level, anchor);
+		bufprintf(ob, "<h%d id=\"%s\">", level, header_anchor(text));
 	else
 		bufprintf(ob, "<h%d>", level);
 
@@ -607,7 +607,7 @@ rndr_footnote_ref(struct buf *ob, unsigned int num, void *opaque)
 }
 
 static void
-toc_header(struct buf *ob, const struct buf *text, int level, char *anchor, void *opaque)
+toc_header(struct buf *ob, const struct buf *text, int level, void *opaque)
 {
 	struct html_renderopt *options = opaque;
 
@@ -635,7 +635,7 @@ toc_header(struct buf *ob, const struct buf *text, int level, char *anchor, void
 			BUFPUTSL(ob,"</li>\n<li>\n");
 		}
 
-		bufprintf(ob, "<a href=\"#%s\">", anchor);
+		bufprintf(ob, "<a href=\"#%s\">", header_anchor(text));
 		if (text) escape_html(ob, text->data, text->size);
 		BUFPUTSL(ob, "</a>\n");
 	}

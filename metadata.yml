@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification
 name: redcarpet
 version: !ruby/object:Gem::Version
-  version: 3.1.1
+  version: 3.1.2
 platform: ruby
 authors:
 - Natacha Porté
@@ -9,7 +9,7 @@ authors:
 autorequire: 
 bindir: bin
 cert_chain: []
-date: 2014-02-17 00:00:00.000000000 Z
+date: 2014-05-10 00:00:00.000000000 Z
 dependencies:
 - !ruby/object:Gem::Dependency
   name: nokogiri
