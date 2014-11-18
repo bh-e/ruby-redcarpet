@@ -1,3 +1,12 @@
+ruby-redcarpet (3.2.0-1) experimental; urgency=medium
+ 
+  * Team upload.
+  * New upstream release.
+  * Bump standards version to 3.9.6 (no changes).
+  * Refresh patches. 
+ 
+ -- Pirate Praveen <praveen@debian.org>  Tue, 18 Nov 2014 15:30:22 +0530
+
 ruby-redcarpet (3.1.2-1) unstable; urgency=medium
 
   * Imported Upstream version 3.1.2
