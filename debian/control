@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9.0~), gem2deb (>= 0.7.4~), rake,
  rake-compiler,
  ruby-nokogiri,
  ruby-test-unit
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Vcs-Git: git://anonscm.debian.org/pkg-ruby-extras/ruby-redcarpet.git
 Vcs-Browser: http://anonscm.debian.org/gitweb?p=pkg-ruby-extras/ruby-redcarpet.git;a=summary
 Homepage: http://github.com/tanoku/redcarpet
@@ -21,3 +21,5 @@ Description: Fast, safe and extensible Markdown to (X)HTML parser for Ruby
  Redcarpet is Ruby library for Markdown processing.
  .
  This is fast, safe and extensible Markdown to (X)HTML parser.
+ .
+ Learn more about its usage at /usr/share/doc/redcarpet/README.markdown.gz
