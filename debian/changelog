@@ -1,3 +1,11 @@
+ruby-redcarpet (3.2.3-1) UNRELEASED; urgency=medium
+
+  * New upstream release: 3.2.3.
+  * Added myself to Uploaders.
+  * debian/control: updated Vcs-Browser, Homepage. Added Testsuite.
+
+ -- Lucas Nussbaum <lucas@debian.org>  Wed, 06 May 2015 11:24:37 +0200
+
 ruby-redcarpet (3.2.0-2) unstable; urgency=medium
 
   * Team upload.
