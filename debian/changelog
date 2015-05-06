@@ -1,8 +1,10 @@
-ruby-redcarpet (3.2.3-1) UNRELEASED; urgency=medium
+ruby-redcarpet (3.2.3-1) unstable; urgency=medium
 
   * New upstream release: 3.2.3.
   * Added myself to Uploaders.
   * debian/control: updated Vcs-Browser, Homepage. Added Testsuite.
+  * Remove patch 0002-Fix-markdown_test.patch: no longer needed.
+  * Add patch fix_test_no_rewind_into_previous_inline.patch.
 
  -- Lucas Nussbaum <lucas@debian.org>  Wed, 06 May 2015 11:24:37 +0200
 
