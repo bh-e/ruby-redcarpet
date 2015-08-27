@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification
 name: redcarpet
 version: !ruby/object:Gem::Version
-  version: 3.2.3
+  version: 3.3.2
 platform: ruby
 authors:
 - Natacha Porté
@@ -9,22 +9,8 @@ authors:
 autorequire: 
 bindir: bin
 cert_chain: []
-date: 2015-04-05 00:00:00.000000000 Z
+date: 2015-06-22 00:00:00.000000000 Z
 dependencies:
-- !ruby/object:Gem::Dependency
-  name: nokogiri
-  requirement: !ruby/object:Gem::Requirement
-    requirements:
-    - - "~>"
-      - !ruby/object:Gem::Version
-        version: 1.6.0
-  type: :development
-  prerelease: false
-  version_requirements: !ruby/object:Gem::Requirement
-    requirements:
-    - - "~>"
-      - !ruby/object:Gem::Version
-        version: 1.6.0
 - !ruby/object:Gem::Dependency
   name: rake-compiler
   requirement: !ruby/object:Gem::Requirement
@@ -45,14 +31,14 @@ dependencies:
     requirements:
     - - "~>"
       - !ruby/object:Gem::Version
-        version: 2.5.4
+        version: 3.0.9
   type: :development
   prerelease: false
   version_requirements: !ruby/object:Gem::Requirement
     requirements:
     - - "~>"
       - !ruby/object:Gem::Version
-        version: 2.5.4
+        version: 3.0.9
 description: A fast, safe and extensible Markdown to (X)HTML parser
 email: vicent@github.com
 executables:
@@ -87,17 +73,20 @@ files:
 - ext/redcarpet/stack.c
 - ext/redcarpet/stack.h
 - lib/redcarpet.rb
+- lib/redcarpet/cli.rb
 - lib/redcarpet/compat.rb
 - lib/redcarpet/render_man.rb
 - lib/redcarpet/render_strip.rb
 - redcarpet.gemspec
 - test/benchmark.rb
 - test/custom_render_test.rb
+- test/fixtures/benchmark.md
 - test/html5_test.rb
 - test/html_render_test.rb
 - test/html_toc_render_test.rb
 - test/markdown_test.rb
 - test/pathological_inputs_test.rb
+- test/redcarpet_bin_test.rb
 - test/redcarpet_compat_test.rb
 - test/safe_render_test.rb
 - test/smarty_html_test.rb
@@ -131,11 +120,13 @@ summary: Markdown that smells nice
 test_files:
 - test/benchmark.rb
 - test/custom_render_test.rb
+- test/fixtures/benchmark.md
 - test/html5_test.rb
 - test/html_render_test.rb
 - test/html_toc_render_test.rb
 - test/markdown_test.rb
 - test/pathological_inputs_test.rb
+- test/redcarpet_bin_test.rb
 - test/redcarpet_compat_test.rb
 - test/safe_render_test.rb
 - test/smarty_html_test.rb
