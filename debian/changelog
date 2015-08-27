@@ -2,6 +2,7 @@ ruby-redcarpet (3.3.2-1) UNRELEASED; urgency=medium
 
   * Team upload.
   * New upstream release.
+  * Remove patch 0001-Remove-RubyGems-Depends.patch (already applied).
 
  -- Pirate Praveen <praveen@debian.org>  Fri, 28 Aug 2015 00:56:00 +0530
 
