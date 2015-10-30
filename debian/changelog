@@ -1,10 +1,16 @@
-ruby-redcarpet (3.3.2-1) UNRELEASED; urgency=medium
+ruby-redcarpet (3.3.2-1) unstable; urgency=medium
 
+  [ Pirate Praveen ]
   * Team upload.
   * New upstream release.
   * Remove patch 0001-Remove-RubyGems-Depends.patch (already applied).
 
- -- Pirate Praveen <praveen@debian.org>  Fri, 28 Aug 2015 00:56:00 +0530
+  [ Antonio Terceiro ]
+  * debian/patches/call-the-right-ruby.patch: while testing the redcarpet
+    binary, call it using the Ruby interpreter currently being used for tests
+    (Closes: #797101)
+
+ -- Antonio Terceiro <terceiro@debian.org>  Fri, 30 Oct 2015 09:31:06 -0200
 
 ruby-redcarpet (3.2.3-1) unstable; urgency=medium
 

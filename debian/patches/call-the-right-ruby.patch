@@ -1,0 +1,22 @@
+Description: Call the right Ruby in tests
+ This is probably Debian-specific as upstream does not care about this type of thing.
+Author: Antonio Terceiro <terceiro@debian.org>
+Origin: vendor
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=797101
+Forwarded: not-needed
+Last-Update: 2015-10-30
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/test/redcarpet_bin_test.rb
++++ b/test/redcarpet_bin_test.rb
+@@ -64,8 +64,9 @@ class RedcarpetBinTest < Redcarpet::Test
+ 
+   def run_bin(*args)
+     bin_path = File.expand_path('../../bin/redcarpet', __FILE__)
++    ruby = RbConfig::CONFIG['ruby_install_name']
+ 
+-    IO.popen("#{bin_path} #{args.join(" ")}") do |stream|
++    IO.popen("#{ruby} #{bin_path} #{args.join(" ")}") do |stream|
+       @output = stream.read
+     end
+   end
