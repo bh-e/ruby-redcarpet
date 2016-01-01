@@ -2,6 +2,7 @@ ruby-redcarpet (3.3.3-1) experimental; urgency=medium
 
   * New upstream patch release
   * Add myself to uploaders
+  * Add a simple rdeps test (need to fix their gemspec for tests to pass)
 
  -- Pirate Praveen <praveen@debian.org>  Fri, 01 Jan 2016 15:25:17 +0530
 

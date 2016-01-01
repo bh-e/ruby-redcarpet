@@ -1,0 +1,23 @@
+#!/bin/sh
+
+exec 2>&1
+set -ex
+
+cd $ADTTMP
+
+mkdir foo
+cd foo
+
+cat >Gemfile <<EOF
+source 'https://rubygems.org'
+
+gem 'github-markup'
+gem 'markerb'
+gem 'yard'
+gem 'tdiary'
+gem 'middleware'
+gem 'mdpress'
+gem 'jekyll'
+EOF
+
+bundle install --local
