@@ -2,7 +2,10 @@ Source: ruby-redcarpet
 Section: ruby
 Priority: optional
 Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
-Uploaders: Youhei SASAKI <uwabami@gfd-dennou.org>, Taku YASUI <tach@debian.org>, Lucas Nussbaum <lucas@debian.org>
+Uploaders: Youhei SASAKI <uwabami@gfd-dennou.org>,
+ Taku YASUI <tach@debian.org>,
+ Lucas Nussbaum <lucas@debian.org>,
+ Pirate Praveen <praveen@debian.org>
 Build-Depends: debhelper (>= 9.0~), gem2deb (>= 0.7.4~), rake,
  rake-compiler,
  ruby-nokogiri,
