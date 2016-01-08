@@ -1,3 +1,9 @@
+ruby-redcarpet (3.3.3-2) unstable; urgency=medium
+
+  * Reupload to unstable 
+
+ -- Pirate Praveen <praveen@debian.org>  Sat, 09 Jan 2016 01:08:30 +0530
+
 ruby-redcarpet (3.3.3-1) experimental; urgency=medium
 
   * New upstream patch release
