@@ -9,7 +9,7 @@ Last-Update: 2015-10-30
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/test/redcarpet_bin_test.rb
 +++ b/test/redcarpet_bin_test.rb
-@@ -64,8 +64,9 @@ class RedcarpetBinTest < Redcarpet::Test
+@@ -64,8 +64,9 @@
  
    def run_bin(*args)
      bin_path = File.expand_path('../../bin/redcarpet', __FILE__)

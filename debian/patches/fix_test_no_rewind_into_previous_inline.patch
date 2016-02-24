@@ -8,7 +8,7 @@ Last-Update: 2015-05-06
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/test/markdown_test.rb
 +++ b/test/markdown_test.rb
-@@ -311,12 +311,12 @@ text
+@@ -359,12 +359,12 @@
  
    def test_no_rewind_into_previous_inline
      result = "<p><em>!dl</em><a href=\"mailto:1@danlec.com\">1@danlec.com</a></p>\n"
