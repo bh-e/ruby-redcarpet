@@ -1,3 +1,13 @@
+ruby-redcarpet (3.3.4-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.3.4
+  * Refrsh patches
+  * Drop ruby-nokogiri from Build-Depends, thanks to Abhijith PA.
+  * Bump Standard version: 3.9.7
+  * Fix lintian warning: vcs-field-uses-insecure-uri
+
+ -- Youhei SASAKI <uwabami@gfd-dennou.org>  Wed, 24 Feb 2016 17:02:18 +0900
+
 ruby-redcarpet (3.3.3-2) unstable; urgency=medium
 
   * Reupload to unstable 
