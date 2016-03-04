@@ -3,12 +3,14 @@ Section: ruby
 Priority: optional
 Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
 Uploaders: Youhei SASAKI <uwabami@gfd-dennou.org>,
- Taku YASUI <tach@debian.org>,
- Lucas Nussbaum <lucas@debian.org>,
- Pirate Praveen <praveen@debian.org>
-Build-Depends: debhelper (>= 9~), gem2deb, rake,
- rake-compiler,
- ruby-test-unit
+           Taku YASUI <tach@debian.org>,
+           Lucas Nussbaum <lucas@debian.org>,
+           Pirate Praveen <praveen@debian.org>
+Build-Depends: debhelper (>= 9~),
+               gem2deb,
+               rake,
+               rake-compiler,
+               ruby-test-unit
 Standards-Version: 3.9.7
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-ruby-extras/ruby-redcarpet.git
 Vcs-Git: https://anonscm.debian.org/git/pkg-ruby-extras/ruby-redcarpet.git
@@ -19,7 +21,9 @@ XS-Ruby-Versions: all
 Package: ruby-redcarpet
 Architecture: any
 XB-Ruby-Versions: ${ruby:Versions}
-Depends: ${shlibs:Depends}, ${misc:Depends}, ruby | ruby-interpreter
+Depends: ruby | ruby-interpreter,
+         ${misc:Depends},
+         ${shlibs:Depends}
 Description: Fast, safe and extensible Markdown to (X)HTML parser for Ruby
  Redcarpet is Ruby library for Markdown processing.
  .
