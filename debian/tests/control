@@ -1,7 +1,0 @@
-# Just make sure gemspec declared dependecy versions match
-Tests: rdeps-test
-Depends: @,  ruby-github-markup, ruby-markerb, yard, tdiary, ruby-middleware, 
- mdpress, jekyll
-
-Test-Command: gem2deb-test-runner --autopkgtest 2>&1
-Depends: @, @builddeps@, gem2deb-test-runner
