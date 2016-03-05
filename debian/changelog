@@ -1,7 +1,24 @@
+ruby-redcarpet (3.3.4-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Cédric Boutillier ]
+  * Bump debhelper compatibility level to 9
+  * Remove version in the gem2deb build-dependency
+  * Run wrap-and-sort on packaging files
+
+  [ Christian Hofstaedtler ]
+  * Update packaging using dh-make-ruby -w.
+  * Remove rdeps-test autopkgtest, rdeps should do that on their own.
+    This is prompted by the removal of "mdpress", which now makes
+    the test fail, but this is not redcarpet's fault at all.
+
+ -- Christian Hofstaedtler <zeha@debian.org>  Sat, 05 Mar 2016 13:55:12 +0100
+
 ruby-redcarpet (3.3.4-1) unstable; urgency=medium
 
   * Imported Upstream version 3.3.4
-  * Refrsh patches
+  * Refresh patches
   * Drop ruby-nokogiri from Build-Depends, thanks to Abhijith PA.
   * Bump Standard version: 3.9.7
   * Fix lintian warning: vcs-field-uses-insecure-uri
@@ -10,7 +27,7 @@ ruby-redcarpet (3.3.4-1) unstable; urgency=medium
 
 ruby-redcarpet (3.3.3-2) unstable; urgency=medium
 
-  * Reupload to unstable 
+  * Reupload to unstable
 
  -- Pirate Praveen <praveen@debian.org>  Sat, 09 Jan 2016 01:08:30 +0530
 
