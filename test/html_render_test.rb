@@ -8,20 +8,20 @@ class HTMLRenderTest < Redcarpet::TestCase
 
   # Hint: overrides filter_html, no_images and no_links
   def test_that_escape_html_works
-    source = <<EOS
-Through <em>NO</em> <script>DOUBLE NO</script>
+    source = <<-HTML.strip_heredoc
+      Through <em>NO</em> <script>DOUBLE NO</script>
 
-<script>BAD</script>
+      <script>BAD</script>
 
-<img src="/favicon.ico" />
-EOS
-    expected = <<EOE
-<p>Through &lt;em&gt;NO&lt;/em&gt; &lt;script&gt;DOUBLE NO&lt;/script&gt;</p>
+      <img src="/favicon.ico" />
+    HTML
+    expected = <<-HTML.chomp.strip_heredoc
+      <p>Through &lt;em&gt;NO&lt;/em&gt; &lt;script&gt;DOUBLE NO&lt;/script&gt;</p>
 
-<p>&lt;script&gt;BAD&lt;/script&gt;</p>
+      <p>&lt;script&gt;BAD&lt;/script&gt;</p>
 
-<p>&lt;img src=&quot;/favicon.ico&quot; /&gt;</p>
-EOE
+      <p>&lt;img src=&quot;/favicon.ico&quot; /&gt;</p>
+    HTML
 
     assert_equal expected, render(source, with: [:escape_html])
   end
@@ -30,14 +30,14 @@ EOE
     markdown = 'Through <em>NO</em> <script>DOUBLE NO</script>'
     output   = render(markdown, with: [:filter_html])
 
-    assert_equal "<p>Through NO DOUBLE NO</p>\n", output
+    assert_equal "<p>Through NO DOUBLE NO</p>", output
   end
 
   def test_filter_html_doesnt_break_two_space_hard_break
     markdown = "Lorem,  \nipsum\n"
     output   = render(markdown, with: [:filter_html])
 
-    assert_equal "<p>Lorem,<br>\nipsum</p>\n", output
+    assert_equal "<p>Lorem,<br>\nipsum</p>", output
   end
 
   def test_that_no_image_flag_works
@@ -45,6 +45,12 @@ EOE
     output   = render(markdown, with: [:no_images])
 
     assert_no_match %r{<img}, output
+  end
+
+  def test_that_links_with_ampersands_work
+    markdown = %([/?a=b&c=d](/?a=b&c=d))
+    output   = render(markdown)
+    assert_equal "<p><a href=\"/?a=b&c=d\">/?a=b&amp;c=d</a></p>", output
   end
 
   def test_that_no_links_flag_works
@@ -58,17 +64,17 @@ EOE
     markdown = "[IRC](irc://chat.freenode.org/#freenode)"
     output   = render(markdown, with: [:safe_links_only])
 
-    assert_equal "<p>[IRC](irc://chat.freenode.org/#freenode)</p>\n", output
+    assert_equal "<p>[IRC](irc://chat.freenode.org/#freenode)</p>", output
   end
 
   def test_that_hard_wrap_works
-    markdown = <<EOE
-Hello world,
-this is just a simple test
+    markdown = <<-Markdown.strip_heredoc
+      Hello world,
+      this is just a simple test
 
-With hard wraps
-and other *things*.
-EOE
+      With hard wraps
+      and other *things*.
+    Markdown
     output   = render(markdown, with: [:hard_wrap])
 
     assert_match %r{<br>}, output
@@ -82,37 +88,37 @@ EOE
 
   def test_that_link_works_with_quotes
     markdown = %([This'link"is](http://example.net/))
-    expected = %(<p><a href="http://example.net/">This&#39;link&quot;is</a></p>\n)
+    expected = %(<p><a href="http://example.net/">This&#39;link&quot;is</a></p>)
 
     assert_equal expected, render(markdown)
     assert_equal expected, render(markdown, with: [:escape_html])
   end
 
   def test_that_code_emphasis_work
-    markdown = <<-MD
-This should be **`a bold codespan`**
-However, this should be *`an emphasised codespan`*
+    markdown = <<-Markdown.strip_heredoc
+      This should be **`a bold codespan`**
+      However, this should be *`an emphasised codespan`*
 
-* **`ABC`** or **`DEF`**
-* Foo bar
-MD
+      * **`ABC`** or **`DEF`**
+      * Foo bar
+    Markdown
 
-    html = <<HTML
-<p>This should be <strong><code>a bold codespan</code></strong>
-However, this should be <em><code>an emphasised codespan</code></em></p>
+    html = <<-HTML.chomp.strip_heredoc
+      <p>This should be <strong><code>a bold codespan</code></strong>
+      However, this should be <em><code>an emphasised codespan</code></em></p>
 
-<ul>
-<li><strong><code>ABC</code></strong> or <strong><code>DEF</code></strong></li>
-<li>Foo bar</li>
-</ul>
-HTML
+      <ul>
+      <li><strong><code>ABC</code></strong> or <strong><code>DEF</code></strong></li>
+      <li>Foo bar</li>
+      </ul>
+    HTML
 
     assert_equal html, render(markdown)
   end
 
   def test_that_parenthesis_are_handled_into_links
     markdown = %(The [bash man page](man:bash(1))!)
-    expected = %(<p>The <a href="man:bash(1)">bash man page</a>!</p>\n)
+    expected = %(<p>The <a href="man:bash(1)">bash man page</a>!</p>)
 
     assert_equal expected, render(markdown)
   end
@@ -127,42 +133,42 @@ HTML
   end
 
   def test_that_footnotes_work
-    markdown = <<-MD
-This is a footnote.[^1]
+    markdown = <<-Markdown.strip_heredoc
+      This is a footnote.[^1]
 
-[^1]: It provides additional information.
-MD
+      [^1]: It provides additional information.
+    Markdown
 
-    html = <<HTML
-<p>This is a footnote.<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
+    html = <<-HTML.chomp.strip_heredoc
+      <p>This is a footnote.<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></p>
 
-<div class="footnotes">
-<hr>
-<ol>
+      <div class="footnotes">
+      <hr>
+      <ol>
 
-<li id="fn1">
-<p>It provides additional information.&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
-</li>
+      <li id="fn1">
+      <p>It provides additional information.&nbsp;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+      </li>
 
-</ol>
-</div>
-HTML
+      </ol>
+      </div>
+    HTML
 
     output = render(markdown, with: [:footnotes])
     assert_equal html, output
   end
 
   def test_footnotes_enabled_but_missing_marker
-    markdown = <<MD
-Some text without a marker
+    markdown = <<-Markdown.strip_heredoc
+      Some text without a marker
 
-[^1] And a trailing definition
-MD
-    html = <<HTML
-<p>Some text without a marker</p>
+      [^1] And a trailing definition
+    Markdown
+    html = <<-HTML.chomp.strip_heredoc
+      <p>Some text without a marker</p>
 
-<p>[^1] And a trailing definition</p>
-HTML
+      <p>[^1] And a trailing definition</p>
+    HTML
 
     output = render(markdown, with: [:footnotes])
     assert_equal html, output
@@ -170,7 +176,7 @@ HTML
 
   def test_footnotes_enabled_but_missing_definition
     markdown = "Some text with a marker[^1] but no definition."
-    expected = "<p>Some text with a marker[^1] but no definition.</p>\n"
+    expected = "<p>Some text with a marker[^1] but no definition.</p>"
 
     output = render(markdown, with: [:footnotes])
     assert_equal expected, output
@@ -241,8 +247,22 @@ HTML
 
   def test_non_ascii_removal_in_header_anchors
     markdown = "# Glühlampe"
-    html = "<h1 id=\"gl-hlampe\">Glühlampe</h1>\n"
+    html = "<h1 id=\"gl-hlampe\">Glühlampe</h1>"
 
     assert_equal html, render(markdown, with: [:with_toc_data])
+  end
+
+  def test_utf8_only_header_anchors
+    markdown = "# 見出し"
+    html = "<h1 id=\"part-37870bfa194139f\">見出し</h1>"
+
+    assert_equal html, render(markdown, with: [:with_toc_data])
+  end
+
+  def test_escape_entities_removal_from_anchor
+    output = render("# Foo's & Bar's", with: [:with_toc_data])
+    result = %(<h1 id="foos-bars">Foo&#39;s &amp; Bar&#39;s</h1>)
+
+    assert_equal result, output
   end
 end

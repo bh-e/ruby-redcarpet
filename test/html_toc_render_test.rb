@@ -4,21 +4,27 @@ require 'test_helper'
 class HTMLTOCRenderTest < Redcarpet::TestCase
   def setup
     @renderer = Redcarpet::Render::HTML_TOC
-    @markdown = "# A title \n## A __nice__ subtitle\n## Another one \n### A sub-sub-title"
+    @markdown = <<-Markdown.strip_heredoc
+      # A title
+      ## A __nice__ subtitle
+      ## Another one
+      ### A sub-sub-title
+      ### 見出し
+    Markdown
   end
 
   def test_simple_toc_render
-    output = render(@markdown).strip
+    output = render(@markdown)
 
     assert output.start_with?("<ul>")
     assert output.end_with?("</ul>")
 
     assert_equal 3, output.scan("<ul>").length
-    assert_equal 4, output.scan("<li>").length
+    assert_equal 5, output.scan("<li>").length
   end
 
   def test_granular_toc_render
-    output = render(@markdown, with: { nesting_level: 2 }).strip
+    output = render(@markdown, with: { nesting_level: 2 })
 
     assert output.start_with?("<ul>")
     assert output.end_with?("</ul>")
@@ -34,6 +40,7 @@ class HTMLTOCRenderTest < Redcarpet::TestCase
     assert_match /a-nice-subtitle/, output
     assert_match /another-one/, output
     assert_match /a-sub-sub-title/, output
+    assert_match /part-37870bfa194139f/, output
   end
 
   def test_toc_heading_with_hyphen_and_equal
