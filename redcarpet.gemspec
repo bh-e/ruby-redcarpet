@@ -1,10 +1,10 @@
 # encoding: utf-8
 Gem::Specification.new do |s|
   s.name = 'redcarpet'
-  s.version = '3.3.4'
+  s.version = '3.4.0'
   s.summary = "Markdown that smells nice"
   s.description = 'A fast, safe and extensible Markdown to (X)HTML parser'
-  s.date = '2015-12-25'
+  s.date = '2016-12-25'
   s.email = 'vicent@github.com'
   s.homepage = 'http://github.com/vmg/redcarpet'
   s.authors = ["Natacha Porté", "Vicent Martí"]
@@ -65,6 +65,7 @@ Gem::Specification.new do |s|
   s.executables = ["redcarpet"]
   s.require_paths = ["lib"]
 
+  s.add_development_dependency "rake", "~> 10.5"
   s.add_development_dependency "rake-compiler", "~> 0.9.5"
   s.add_development_dependency "test-unit", "~> 3.1.3"
 end

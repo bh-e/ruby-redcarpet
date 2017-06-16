@@ -25,7 +25,7 @@ Starting with Redcarpet 3.0, the minimum required Ruby version is 1.9.2 (or Rubi
 
     $ [sudo] gem install redcarpet
 
-If you need to use it with Ruby 1.8.7, you will need to stick with 2.3.0:
+If you need to use it with Ruby 1.8.7, you will have to stick with 2.3.0:
 
     $ [sudo] gem install redcarpet -v 2.3.0
 
@@ -185,9 +185,18 @@ When instantiating this render object, you can optionally pass a `nesting_level`
 option which takes an integer and allows you to make it render only headers
 until a specific level.
 
-Furthermore, the abstract base class `Redcarpet::Render::Base` can be used
-to write a custom renderer purely in Ruby, or extending an existing renderer.
-See the following section for more information.
+Redcarpet also includes a plaintext renderer, `Redcarpet::Render::StripDown`, that
+strips out all the formatting:
+
+~~~~ ruby
+require 'redcarpet'
+require 'redcarpet/render_strip'
+
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+
+markdown.render("**This** _is_ an [example](http://example.org/).")
+# => "This is an example (http://example.org/)."
+~~~~
 
 
 And you can even cook your own
@@ -197,18 +206,19 @@ Custom renderers are created by inheriting from an existing renderer. The
 built-in renderers, `HTML` and `XHTML` may be extended as such:
 
 ~~~~~ ruby
-# create a custom renderer that allows highlighting of code blocks
-class HTMLwithPygments < Redcarpet::Render::HTML
-  def block_code(code, language)
-    Pygments.highlight(code, lexer: language)
+# Create a custom renderer that sets a custom class for block-quotes.
+class CustomRender < Redcarpet::Render::HTML
+  def block_quote(quote)
+    %(<blockquote class="my-custom-class">#{quote}</blockquote>)
   end
 end
 
 markdown = Redcarpet::Markdown.new(HTMLwithPygments, fenced_code_blocks: true)
 ~~~~~
 
-But new renderers can also be created from scratch (see `lib/redcarpet/render_man.rb` for
-an example implementation of a Manpage renderer)
+But new renderers can also be created from scratch by extending the abstract
+base class `Redcarpet::Render::Base` (see `lib/redcarpet/render_man.rb` for
+an example implementation of a Manpage renderer):
 
 ~~~~~~ ruby
 class ManPage < Redcarpet::Render::Base
@@ -373,7 +383,7 @@ monkeypatches the Markdown class, you're a terrible human being. Just saying.
 Boring legal stuff
 ------------------
 
-Copyright (c) 2011-2015, Vicent Martí
+Copyright (c) 2011-2016, Vicent Martí
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

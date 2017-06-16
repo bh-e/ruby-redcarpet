@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification
 name: redcarpet
 version: !ruby/object:Gem::Version
-  version: 3.3.4
+  version: 3.4.0
 platform: ruby
 authors:
 - Natacha Porté
@@ -9,8 +9,22 @@ authors:
 autorequire: 
 bindir: bin
 cert_chain: []
-date: 2015-12-25 00:00:00.000000000 Z
+date: 2016-12-25 00:00:00.000000000 Z
 dependencies:
+- !ruby/object:Gem::Dependency
+  name: rake
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - "~>"
+      - !ruby/object:Gem::Version
+        version: '10.5'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - "~>"
+      - !ruby/object:Gem::Version
+        version: '10.5'
 - !ruby/object:Gem::Dependency
   name: rake-compiler
   requirement: !ruby/object:Gem::Requirement
@@ -113,7 +127,7 @@ required_rubygems_version: !ruby/object:Gem::Requirement
       version: '0'
 requirements: []
 rubyforge_project: 
-rubygems_version: 2.2.2
+rubygems_version: 2.5.2
 signing_key: 
 specification_version: 4
 summary: Markdown that smells nice

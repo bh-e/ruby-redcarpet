@@ -92,7 +92,6 @@ typedef size_t
 
 static size_t char_emphasis(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
 static size_t char_underline(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
-static size_t char_highlight(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
 static size_t char_quote(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
 static size_t char_linebreak(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
 static size_t char_codespan(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offset, size_t size);
@@ -613,7 +612,7 @@ parse_emph1(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t size
 		if (data[i] == c && !_isspace(data[i - 1])) {
 
 			if (rndr->ext_flags & MKDEXT_NO_INTRA_EMPHASIS) {
-				if (i + i < size && _isalnum(data[i + 1]))
+				if (i + 1 < size && _isalnum(data[i + 1]))
 					continue;
 			}
 
@@ -844,7 +843,6 @@ char_quote(struct buf *ob, struct sd_markdown *rndr, uint8_t *data, size_t offse
 
 	return end;
 }
-
 
 /* char_escape • '\\' backslash escape */
 static size_t
@@ -2339,7 +2337,7 @@ parse_table_header(
 		if (i < under_end && data[i] != '|' && data[i] != '+')
 			break;
 
-		if (dashes < 3)
+		if (dashes < 1)
 			break;
 
 		i++;
@@ -2757,10 +2755,13 @@ sd_markdown_new(
 	if (md->cb.emphasis || md->cb.double_emphasis || md->cb.triple_emphasis) {
 		md->active_char['*'] = MD_CHAR_EMPHASIS;
 		md->active_char['_'] = MD_CHAR_EMPHASIS;
+
 		if (extensions & MKDEXT_STRIKETHROUGH)
 			md->active_char['~'] = MD_CHAR_EMPHASIS;
 		if (extensions & MKDEXT_HIGHLIGHT)
 			md->active_char['='] = MD_CHAR_EMPHASIS;
+		if (extensions & MKDEXT_QUOTE)
+			md->active_char['"'] = MD_CHAR_QUOTE;
 	}
 
 	if (md->cb.codespan)
@@ -2784,9 +2785,6 @@ sd_markdown_new(
 
 	if (extensions & MKDEXT_SUPERSCRIPT)
 		md->active_char['^'] = MD_CHAR_SUPERSCRIPT;
-
-	if (extensions & MKDEXT_QUOTE)
-		md->active_char['"'] = MD_CHAR_QUOTE;
 
 	/* Extension data */
 	md->ext_flags = extensions;
